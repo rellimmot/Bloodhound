@@ -192,7 +192,7 @@ void Start(){
 //return to (0,0)
 void Home(){
   Go_to(1,5);          Calibrate();        Go_to(1,1);
-  Calibrate();    left(oneBlock/2);    align_Delta(1);
+  Calibrate();    Left(oneBlock/2);    align_Delta();
   Backward(oneBlock);    x_pos = 0;         y_pos = 0;
   Calibrate();
   }
