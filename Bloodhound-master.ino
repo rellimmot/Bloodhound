@@ -64,7 +64,7 @@ Adafruit_DCMotor *M1Motor = AFMS.getMotor(1); Adafruit_DCMotor *M2Motor = AFMS.g
 Adafruit_DCMotor *M3Motor = AFMS.getMotor(3); Adafruit_DCMotor *M4Motor = AFMS.getMotor(4);
 
 //Setup variables for moving one block and initial speed
-int oneBlock = 306;  int Ninety  = 24;
+int oneBlock = 306;  int Ninety  = 135;
 int M1Speed  =  50;  int M2Speed = 50; 
 int M3Speed  =  50;  int M4Speed = 50;
 
@@ -191,10 +191,10 @@ void Start(){
 
 //return to (0,0)
 void Home(){
-  Go_to(1,5);          Calibrate();        Go_to(1,1);
-  Calibrate();    Left(oneBlock/2);    align_Delta();
-  Backward(oneBlock);    x_pos = 0;         y_pos = 0;
-  Calibrate();
+  Go_to(1,5);          Calibrate();         Go_to(1,1);
+  Calibrate();         Left(oneBlock/2);    align_Delta();
+  Backward(oneBlock);  Left(oneBlock/2);    x_pos = 0;      
+  y_pos = 0;           Calibrate();
   }
 
 //knock funtion that knocks and returns
@@ -335,7 +335,7 @@ void turnCW(int Blocks){
       for(i=40; i<100; i++){
         M1Motor->setSpeed(i); M3Motor->setSpeed(i);
         M2Motor->setSpeed(i); M4Motor->setSpeed(i);
-        delay(10);
+        delayMicroseconds(100);
       }
     }
     Serial.print(M1tick);
@@ -358,7 +358,7 @@ void turnCCW(int Blocks){
       for(i=40; i<100; i++){
         M1Motor->setSpeed(i); M3Motor->setSpeed(i);
         M2Motor->setSpeed(i); M4Motor->setSpeed(i);
-        delay(10);
+        delayMicroseconds(100);
       }
     }
     Serial.print(M1tick);
@@ -646,10 +646,10 @@ void Go_to(int x_finish, int y_finish){
 
 void Calibrate(){
   if(x_pos<4)   {align_Bravo();   offset_Bravo(x_pos);   align_Bravo();}
-  else          {align_Delta();   offset_Delta(x_pos);   align_Delta();}
+  else          {align_Delta();   offset_Delta(6-x_pos);   align_Delta();}
   
   if(y_pos<4)   {offset_Charlie(y_pos);    align_Charlie();}
-  else          {offset_Alpha(y_pos);        align_Alpha();}
+  else          {offset_Alpha(6-y_pos);        align_Alpha();}
 }
     
 /**************************************************************************************INTERRUPT FUNCTIONS************************************************************************************/
